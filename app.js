@@ -3,7 +3,7 @@ import cors from 'cors';
 import authRouter from './src/modules/auth/auth.routes.js';
 import orderRouter from './src/modules/orders/order.routes.js';
 import productRouter from './src/modules/products/product.routes.js';
-
+import adminRoutes from './src/modules/admin/admin.routes.js';
 export const app = express();
 
 app.use(cors({
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/products', productRouter);
-
+app.use('/api/admin', adminRoutes);
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'success', message: 'Бэкенд маркетплейса запущен!' });
 });
