@@ -67,3 +67,9 @@ export const restrictTo = (...roles) => {
     next();
   };
 };
+export const requireRole = (...roles) => (req, res, next) => {
+  if (!roles.includes(req.user?.role)) {
+    return next(new AppError('Нет доступа', 403));
+  }
+  next();
+};
