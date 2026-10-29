@@ -24,15 +24,13 @@ export const register = async (req, res, next) => {
       return res.status(400).json({ status: 'fail', message: 'Этот email уже зарегистрирован' });
     }
 
-    // Сопоставляем роль 'user' с 'customer' для базы данных
-    let dbRole = role;
-    if (!role || role === 'user') dbRole = 'customer';
+    const normalizedRole = role === 'customer' ? 'user' : (role || 'user');
 
     const newUser = await User.create({
       name,
       email,
       password,
-      role: dbRole
+      role: normalizedRole
     });
 
     if (newUser.role === 'seller') {
