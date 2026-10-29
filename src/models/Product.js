@@ -36,6 +36,15 @@ export const Product = sequelize.define('Product', {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  status: {
+    type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+    allowNull: false,
+    defaultValue: 'pending',
+  },
+  rejectReason: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 Seller.hasMany(Product, { foreignKey: 'seller_id', onDelete: 'CASCADE' });

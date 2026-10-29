@@ -3,19 +3,31 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const sequelize = new Sequelize('postgres', 'postgres.fuvdflymvikxyelbiusl', 'werperEmb80123', {
-  host: 'aws-0-ap-south-1.pooler.supabase.com',
-  port: 6543,
+const dbName = process.env.DB_NAME || 'postgres';
+const dbUser = process.env.DB_USER || 'postgres';
+const dbPassword = process.env.DB_PASSWORD || '';
+const dbHost = process.env.DB_HOST || 'localhost';
+const dbPort = Number(process.env.DB_PORT || 5432);
+const useSsl = process.env.DB_SSL === 'true';
+
+export const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+  host: dbHost,
+  port: dbPort,
   dialect: 'postgres',
   logging: false,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    },
-    keepalives: true,
-    keepalives_idle: 30
-  },
+  dialectOptions: useSsl
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        },
+        keepalives: true,
+        keepalives_idle: 30
+      }
+    : {
+        keepalives: true,
+        keepalives_idle: 30
+      },
   pool: {
     max: 1,
     min: 0,

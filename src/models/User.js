@@ -25,10 +25,9 @@ export const User = sequelize.define('User', {
     allowNull: false
   },
   role: {
-    type: DataTypes.ENUM('customer', 'seller', 'admin'),
-    defaultValue: 'customer',
-    allowNull: false
-  }
+    type: DataTypes.ENUM('user', 'seller', 'admin'),
+    defaultValue: 'user',
+  },
 }, {
   hooks: {
     beforeCreate: async (user) => {
