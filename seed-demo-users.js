@@ -8,7 +8,7 @@ import { Seller } from './src/models/Seller.js';
 async function resetDemoUsers() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ alter: true });
 
     await Seller.destroy({ where: {}, force: true });
     await User.destroy({ where: {}, force: true });

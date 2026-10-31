@@ -1,3 +1,4 @@
+  import { Op } from 'sequelize';
   import { Product } from '../../models/Product.js';
   import { Category } from '../../models/Category.js';
   import { Seller } from '../../models/Seller.js';

@@ -56,3 +56,23 @@ export const rejectProduct = catchAsync(async (req, res) => {
   await product.update({ status: 'rejected', rejectReason: req.body.reason });
   res.json(product);
 });
+
+export const deleteUser = catchAsync(async (req, res) => {
+  const targetUser = await User.findByPk(req.params.id);
+
+  if (!targetUser) {
+    throw new AppError('Пользователь не найден', 404);
+  }
+
+  if (targetUser.role === 'admin') {
+    throw new AppError('Нельзя удалить администратора', 403);
+  }
+
+  await targetUser.destroy();
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Пользователь удалён',
+    data: { id: targetUser.id, email: targetUser.email },
+  });
+});
